@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bienvenido a Infinity Market</title>
+  <style>
+    body {
+      background-image: url(imagenes/web.jpg);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: transparent;
+    }
+
+    .container {
+      width: 300px;
+      margin: 0 auto;
+      margin-top: 100px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 5s;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .logo-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo-container img {
+      width: 100px;
+      height: auto;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: none;
+      border-bottom: 2px solid #ddd;
+      background-color: transparent;
+      color: #555;
+      font-size: 14px;
+      transition: border-bottom-color 0.3s;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      border-bottom-color: #ff7f50;
+      outline: none;
+    }
+
+    .button-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .button-container input[type="submit"] {
+      display: inline-block;
+      background-color: #ff7f50;
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 16px;
+      text-transform: uppercase;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .button-container input[type="submit"]:hover {
+      background-color: #ff6347;
+      transform: translateY(-2px);
+    }
+  </style>
+  <script>
+    function redirectToNextPage() {
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+
+      // Verificar las credenciales ingresadas
+      if (username === "administrador" && password === "politecnico.2023") {
+        window.location.href = "pagina siguiente.html";
+      } else {
+        alert("Credenciales inválidas. Inténtalo de nuevo.");
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="logo-container">
+      <img src="imagenes/logo_color.png" alt="Logo">
+    </div>
+    <h2>Bienvenido</h2>
+    <form>
+      <input type="text" id="username" placeholder="Nombre de usuario">
+      <input type="password" id="password" placeholder=" Contraseña ">
+      <div class="button-container">
+        <input type="button" value="Iniciar sesión" onclick="redirectToNextPage()">
+      </div>
+    </form>
+  </div>
+</body>
+</html>

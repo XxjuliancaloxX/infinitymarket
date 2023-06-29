@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Infinity Market</title>
+  <style>
+    /* Estilos generales */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      background-image: url(imagenes/web.jpg);
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .container {
+      max-width: 1000px;
+      /*max-height: 1000px;*/
+      margin: 100px auto;
+      padding: 10px;
+      background-color: #ffffff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilos del encabezado */
+     .header {
+      max-width: 100%;
+      background-color: #143241;
+      display: flex;
+      align-items: center;
+      /*justify-content: left;*/
+      margin-bottom: 20px;
+    } 
+    .logo {
+      width: 182px;
+      margin-right: 11%;
+    }
+    .menu-toggle {
+      display: none;
+    } 
+    /*.menu-toggle-label {
+      display: block;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      position: relative;
+    }*/
+     /*.menu-toggle-label span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: #000000;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      transition: transform 0.3s ease-in-out;
+    } */
+    /* .menu-toggle-label span:first-child {
+      transform-origin: top left;
+    }
+    .menu-toggle-label span:last-child {
+      transform-origin: bottom left;
+    }
+    .menu-toggle:checked + .menu-toggle-label span:first-child {
+      transform: rotate(45deg);
+    }
+    .menu-toggle:checked + .menu-toggle-label span:nth-child(2) {
+      transform: scale(0);
+    }
+    .menu-toggle:checked + .menu-toggle-label span:last-child {
+      transform: rotate(-45deg);
+    } */
+    /* .menu {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    } */
+    .menu-list {
+      display: flex;
+      list-style: none;
+      padding:  0,;
+      margin: 0;
+    }
+    .menu-item {
+      margin-left: 10px;
+    }
+    .menu-link {
+      text-decoration: none;
+      color: #ffffff;
+      font-weight: bold;
+      padding: 10px;
+      border-radius: 4px;
+      transition: background-color 0.3s ease-in-out;
+    }
+    .menu-link:hover {
+      background-color: orange;
+      color: rgb(253, 253, 253);
+    }
+
+    /* Estilos de la tienda */
+    h1 {
+      text-align: center;
+    }
+    .products-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 100px;
+    }
+    .product {
+      width: 200px;
+      margin: 10px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border-radius: 4px;
+      text-align: center;
+    }
+    .product img {
+      width: 220px; /* 100 */
+      height: 150px;
+      margin-bottom: 10px;
+      
+    }
+    .product-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .product-description {
+      color: #777;
+      margin-bottom: 10px;
+    }
+    .product-price {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .product-button {
+      padding: 5px 10px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .product-button:hover {
+      background-color: #45a049;
+    }
+    #cart {
+      padding: 10px;
+      background-color: #f9f9f9;
+      border-radius: 4px;
+    }
+    #cart-items {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+    #cart-total {
+      font-weight: bold;
+      text-align: right;
+      margin-top: 10px;
+    }
+    .remove-button {
+      padding: 5px 5px;
+      background-color: #ff4444;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .remove-button:hover {
+      background-color: #cc0000;
+    }
+    .checkout-button {
+      padding: 10px 20px;
+      background-color: #2196f3;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 20px;
+      float: right;
+    }
+    .checkout-button:hover {
+      background-color: #0d8ddb;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+      position: relative; /* Agregado */
+      min-height: 100vh; /* Agregado */
+    }
+    .container {
+      max-width: 1000px;
+      margin: 100px auto;
+      padding: 10px;
+      background-color: #ffffff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    #cart {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border-radius: 4px;
+     
+    }
+
+  </style>
+  <script>
+    // Array para almacenar los productos en el carrito
+    let cartItems = [];
+    let cartTotal = 0;
+
+    // Función para agregar un producto al carrito
+    function addToCart(title, price) {
+      cartItems.push({ title, price });
+      cartTotal += price;
+      updateCart();
+    }
+
+    // Función para eliminar un producto del carrito
+    function removeFromCart(index) {
+      const removedItem = cartItems.splice(index, 1)[0];
+      cartTotal -= removedItem.price;
+      updateCart();
+    }
+
+    // Función para generar el pago
+    function checkout() {
+      if (cartItems.length > 0) {
+        // Aquí puedes agregar la lógica para procesar el pago
+
+        // Redirigir al cliente a la plataforma bancaria
+        window.location.href = 'https://www.paypal.com/signin'; // Reemplaza esta URL con la URL de la plataforma bancaria que deseas utilizar
+
+        // Limpiar el carrito después de redireccionar
+        cartItems = [];
+        cartTotal = 0;
+        updateCart();
+      } else {
+        alert('El carrito de compras está vacío. Agregue productos antes de generar el pago.');
+      }
+    }
+
+    // Función para actualizar la lista de productos en el carrito
+    function updateCart() {
+      const cartList = document.getElementById('cart-items');
+      const cartTotalElement = document.getElementById('cart-total');
+      cartList.innerHTML = '';
+
+      cartItems.forEach((item, index) => {
+        const li = document.createElement('li');
+        const title = document.createElement('span');
+        const price = document.createElement('span');
+        const removeButton = document.createElement('button');
+
+        title.textContent = item.title;
+        price.textContent = '$' + item.price.toFixed(2);
+        removeButton.textContent = 'Eliminar';
+        removeButton.className = 'remove-button';
+        removeButton.onclick = () => removeFromCart(index);
+
+        li.appendChild(title);
+        li.appendChild(document.createTextNode(' - '));
+        li.appendChild(price);
+        li.appendChild(removeButton);
+
+        cartList.appendChild(li);
+      });
+
+      cartTotalElement.textContent = 'Total: $' + cartTotal.toFixed(2);
+    }
+  </script>
+</head>
+<body>
+  
+  <div></div>
+
+  </div>
+  <div class="container">
+    <header class="header">
+      <img class="logo" src="imagenes/logo_color.png" alt="Logo de la tienda">
+      <!-- <input class="menu-toggle" id="menu-toggle" type="checkbox">
+      <label class="menu-toggle-label" for="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label> -->
+      <nav class="menu">
+        <ul class="menu-list" >
+          <li class="menu-item">
+            <a class="menu-link" href="./inicio.html">Acerca de nosotros</a>
+          </li>
+          <li class="menu-item">
+            <a class="menu-link" href="#">Motos</a>
+          </li>
+          <li class="menu-item">
+            <a class="menu-link" href="https://wa.me/573237606794?text=Continua%20tu%20proceso%20de%20compra%20con%20nosotros%20adjuntando%20tu%20factura!">Contactanos</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <h1>Infinity Market</h1>
+    <div class="products-container">
+      <div class="product">
+        <img c src="imagenes/Xr.webp" alt="Producto 7">
+        <h3 class="product-title">Honda Xr 150L</h3>
+        <p class="product-description">
+          <p>-cilindraje:149.1 cc </p>
+          <p>-potencia maxima:11.7 Hp @ 8000 RpM</p>
+          <p>-torque maximo:12.1 NM @ 6000 RpM</p>
+          <p>-modelo:2024 </p>
+        </p>
+        <p class="product-price">$2673.73</p>
+        <button class="product-button" onclick="addToCart('Honda Xr 150L', 2673.73)">Agregar al carrito</button>
+      </div>
+      <div class="product">
+        <img src="imagenes/pulsar200fi.png" alt="Producto 1">
+        <h3 class="product-title">Pulsar NS 200 Fi ABS</h3>
+        <p class="product-description">
+          <p>-cilindraje:199.4 cc </p>
+          <p>-potencia maxima:24.12 Hp @ 9750 RpM</p>
+          <p>-torque maximo:18.6 N.m @ 8000 RpM </p>
+          <p>-modelo:2024 </p>
+        </p>
+        <p class="product-price">$3218.80</p>
+        <button class="product-button" onclick="addToCart('Pulsar NS 200 Fi ABS', 3218.80)">Agregar al carrito</button>
+      </div>
+      <div class="product">
+        <img src="imagenes/apache.webp" alt="Producto 2">
+        <h3 class="product-title">Tvs Apache 200 Fi ABS</h3>
+        <p class="product-description">
+          <p>-cilindraje:200 cc </p>
+          <p>-potencia maxima:20.54 HP @ 9000 RpM</p>
+          <p>-torque maximo:17.25 NM @ 7250 RpM </p>
+          <p>-modelo:2024 </p>
+        </p>
+        <p class="product-price">$3267.09</p>
+        <button class="product-button" onclick="addToCart('Tvs Apache 200 Fi ABS', 3267.09)">Agregar al carrito</button>
+      </div>
+      <div class="product">
+        <img src="imagenes/gixxer.png" alt="Producto 3">
+        <h3 class="product-title">Suzuki Gixxer 250</h3>
+        <p class="product-description">
+          <p>-cilindraje:249 cc </p>
+          <p>-potencia maxima:26,1HP @ 9000 RpM</p>
+          <p>-torque maximo:22,2 NM @ 7500 RPM </p>
+          <p>-modelo:2024 </p>
+        </p>
+        <p class="product-price">$3742.75</p>
+        <button class="product-button" onclick="addToCart('Suzuki Gixxer 250', 3742.75)">Agregar al carrito</button>
+    </div>
+    <div id="cart">
+      <h2>Carrito de compras</h2>
+      <ul id="cart-items"></ul>
+      <div id="cart-total">Total: $0.00</div>
+      <button class="checkout-button" onclick="checkout()">Realizar pago</button>
+    </div>
+    
+  </div>
+</body>
+</html>
